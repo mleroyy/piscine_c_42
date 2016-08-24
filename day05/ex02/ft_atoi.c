@@ -1,0 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleroy <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/08/04 23:17:19 by mleroy            #+#    #+#             */
+/*   Updated: 2016/08/10 18:24:35 by mleroy           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+void	ft_check_char(char *str, int *i, int *h)
+{
+	while (str[*i] <= 32)
+		(*i)++;
+	if (str[*i] == '-' && (str[(*i) + 1] >= '0' && str[(*i) + 1] <= '9'))
+	{
+		*h = -1;
+		(*i)++;
+	}
+	else if (str[*i] == '+' && (str[(*i) + 1] >= '0' && str[(*i) + 1] <= '9'))
+		(*i)++;
+}
+
+void	ft_calculate(char *str, int *i, int *j, int *integer)
+{
+	(*j)++;
+	if ((*j) == 1)
+		(*integer) = (*integer) + (str[(*i)] - 48);
+	else
+		(*integer) = (*integer) * 10 + (str[(*i)] - 48);
+}
+
+int		ft_atoi(char *str)
+{
+	int		i;
+	int		j;
+	int		h;
+	int		integer;
+
+	i = 0;
+	j = 0;
+	h = 1;
+	integer = 0;
+	ft_check_char(str, &i, &h);
+	while (str[i] != 0)
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+		{
+			ft_calculate(str, &i, &j, &integer);
+		}
+		else
+		{
+			integer *= h;
+			return (integer);
+		}
+		i++;
+	}
+	integer *= h;
+	return (integer);
+}
